@@ -2,7 +2,7 @@ from Player.player import Player
 from Rooms.room import Room
 
 class ShopRoom(Room):
-    def __init__(self, player):
+    def __init__(self, player : Player):
         super().__init__(player)
         self.items = ['Potion', 'Sword', 'Shield', 'Armor']
 
@@ -42,7 +42,3 @@ class ShopRoom(Room):
                 self.player.buyArmor()
         else:
             print('Invalid item name!')
-
-    @staticmethod
-    def getRoom(player):
-        return ShopRoom(player)

@@ -1,0 +1,122 @@
+[
+    {
+        "name": "Goblin",
+        "hp": 30,
+        "attack": 5
+    },
+    {
+        "name": "Zombie",
+        "hp": 40,
+        "attack": 10
+    },
+    {
+        "name": "Harpy",
+        "hp": 60,
+        "attack": 15
+    },
+    {
+        "name": "Ice Wraith",
+        "hp": 50,
+        "attack": 15
+    },
+    {
+        "name": "Skeleton Warrior",
+        "hp": 50,
+        "attack": 10
+    },
+    {
+        "name": "Orc",
+        "hp": 60,
+        "attack": 15
+    },
+    {
+        "name": "Shadow Assassin",
+        "hp": 60,
+        "attack": 25
+    },
+    {
+        "name": "Dark Mage",
+        "hp": 40,
+        "attack": 25
+    },
+    {
+        "name": "Necromancer",
+        "hp": 70,
+        "attack": 35
+    },
+    {
+        "name": "Demon Hound",
+        "hp": 70,
+        "attack": 20
+    },
+    {
+        "name": "Giant Spider",
+        "hp": 90,
+        "attack": 20
+    },
+    {
+        "name": "Cursed Knight",
+        "hp": 110,
+        "attack": 30
+    },
+    {
+        "name": "Troll",
+        "hp": 120,
+        "attack": 20
+    },
+    {
+        "name": "Lich",
+        "hp": 120,
+        "attack": 40
+    },
+    {
+        "name": "Drake",
+        "hp": 180,
+        "attack": 40
+    },
+    {
+        "name": "Fire Elemental",
+        "hp": 100,
+        "attack": 35
+    },
+    {
+        "name": "Vampire",
+        "hp": 80,
+        "attack": 30
+    },
+    {
+        "name": "Minotaur",
+        "hp": 200,
+        "attack": 35
+    },
+    {
+        "name": "Phoenix",
+        "hp": 140,
+        "attack": 45
+    },
+    {
+        "name": "Wyvern",
+        "hp": 150,
+        "attack": 50
+    },
+    {
+        "name": "Sea Serpent",
+        "hp": 200,
+        "attack": 50
+    },
+    {
+        "name": "Stone Golem",
+        "hp": 250,
+        "attack": 20
+    },
+    {
+        "name": "Chaos Demon",
+        "hp": 250,
+        "attack": 70
+    },
+    {
+        "name": "Hydra",
+        "hp": 300,
+        "attack": 60
+    }
+]

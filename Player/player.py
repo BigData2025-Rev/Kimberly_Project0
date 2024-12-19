@@ -5,28 +5,15 @@ import random
 
 class Player:
     def __init__(self):
-        # check if playerData.json exists
-        # if it does, load the player data
-        if os.path.isfile('GameData/playerData.json'):
-            with open('playerData.json', 'r') as file:
-                data = json.load(file)
-            self.hp = data['hp']
-            self.attack = data['attack']
-            self.defense = data['defense']
-            self.gold = data['gold']
-            self.inventory = data['inventory']
-            self.max_hp = data['max_hp']
-            self.mana = data['mana']
-            self.encounter_count = data['encounter_count']
-        else:
-            self.hp = 100
-            self.attack = 10
-            self.defense = 0
-            self.gold = 0
-            self.inventory = []
-            self.max_hp = 100
-            self.mana = 100
-            self.encounter_count = 0
+        self.hp = 100.0
+        self.attack = 10.0
+        self.defense = 0.0
+        self.gold = 0
+        self.inventory = []
+        self.max_hp = 100.0
+        self.mana = 100.0
+        self.encounter_count = 1
+        self.seed = 0
 
         # Spell stats
         self.damage_reduction = 0 # % damage reduction
@@ -46,8 +33,8 @@ class Player:
             'inventory': self.inventory,
             'max_hp': self.max_hp,
             'mana': self.mana,
-            'encounter_count': self.encounter_count
-
+            'encounter_count': self.encounter_count,
+            'seed': self.seed
         }
 
         with open('GameData/playerData.json', 'w') as file:
@@ -94,12 +81,36 @@ class Player:
         self.critical_chance = 0
         self.counter = False
         self.active_spell = None
-        self.manap = 100
+        self.mana = 100
         
     def printStats(self):
         print("Current Stats:")
         print(f"HP: {self.hp}, Attack: {self.attack}, Defense: {self.defense}, Gold: {self.gold}")
+        print()
 
     def isAlive(self):
         return self.hp > 0
+    
+    # Reset player save data
+    def removeSave(self):
+        os.remove('GameData/playerData.json')
+
+    #Attempts to load data from playerData.json and stores the data in the player object
+    #Returns true if the data was successfully loaded, false otherwise
+    def loadData(self) -> bool:
+        if os.path.isfile('GameData/playerData.json'):
+            with open('GameData/playerData.json', 'r') as file:
+                data = json.load(file)
+            self.hp = data['hp']
+            self.attack = data['attack']
+            self.defense = data['defense']
+            self.gold = data['gold']
+            self.inventory = data['inventory']
+            self.max_hp = data['max_hp']
+            self.mana = data['mana']
+            self.encounter_count = data['encounter_count']
+            self.seed = data['seed']
+            return True
+        else:
+            return False
     

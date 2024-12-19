@@ -2,16 +2,17 @@ from Rooms.enemy_room import EnemyRoom
 from Player.player import Player
 
 class BossRoom(EnemyRoom):
-    def __init__(self, player):
+    def __init__(self, player : Player):
         super().__init__(player)
-        self.enemies = ['Dragon']
 
     def onEnter(self):
+        self.enemies = ['Dragon']
         print('You have entered the boss room!')
         print('The boss is a mighty dragon!')
 
     def onExit(self):
-        pass
+        print("You have defeated the boss!")
+        #reward player with gold
 
     def isActive(self):
         return self.enemies != []
