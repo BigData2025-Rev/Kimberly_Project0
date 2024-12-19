@@ -56,7 +56,6 @@ class Player:
 
     # Calculate damage dealt based on player attack
     def die(self):
-        self.reset()
         self.save()
         print('You died!')
 

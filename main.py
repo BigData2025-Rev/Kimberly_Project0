@@ -48,7 +48,7 @@ def options_prompt(question: str, options: list[str]) -> int:
 
 #combat loop, used for boss rooms and enemy rooms
 def begin_combat(player: Player, room: EnemyRoom):
-    while room.isActive():
+    while room.isActive() and player.isAlive():
         print()
         action = options_prompt("Which enemy would you like to attack?", room.getOptions())
 
@@ -58,11 +58,13 @@ def begin_combat(player: Player, room: EnemyRoom):
             damage = player.attackEnemy()
             print(f'You deal {damage} damage to the enemy!')
             room.enemies[action].takeDamage(damage)
-
-
         print()
+
+
         #Enemy turn
         room.attackPlayer(player)
+
+
         print()
         player.printStats()
 
@@ -102,6 +104,8 @@ while player.isAlive():
 
     if isinstance(room, EnemyRoom):
         begin_combat(player, room)
+        if not player.isAlive():
+            break
     elif isinstance(room, ShopRoom):
         shop(player, room)
 
