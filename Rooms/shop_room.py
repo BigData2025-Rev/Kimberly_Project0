@@ -2,8 +2,8 @@ from Player.player import Player
 from Rooms.room import Room
 
 class ShopRoom(Room):
-    def __init__(self, player : Player):
-        super().__init__(player)
+    def __init__(self, encounter_count: int):
+        super().__init__(encounter_count)
         self.items = ['Potion', 'Sword', 'Shield', 'Armor']
 
     def onEnter(self):

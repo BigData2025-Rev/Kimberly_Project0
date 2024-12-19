@@ -4,7 +4,8 @@ from abc import ABC, abstractmethod
 import random as r
 
 class Room(ABC):
-    def __init__(self):
+    def __init__(self, encounter_count : int):
+        self.encounter_count = encounter_count
         pass
     #Method called when player enters the room
     @abstractmethod

@@ -1,18 +1,18 @@
 [
     {
         "name": "Goblin",
-        "hp": 30,
+        "hp": 20,
         "attack": 5
     },
     {
         "name": "Zombie",
-        "hp": 40,
+        "hp": 30,
         "attack": 10
     },
     {
         "name": "Harpy",
-        "hp": 60,
-        "attack": 15
+        "hp": 35,
+        "attack": 8
     },
     {
         "name": "Ice Wraith",
@@ -98,25 +98,5 @@
         "name": "Wyvern",
         "hp": 150,
         "attack": 50
-    },
-    {
-        "name": "Sea Serpent",
-        "hp": 200,
-        "attack": 50
-    },
-    {
-        "name": "Stone Golem",
-        "hp": 250,
-        "attack": 20
-    },
-    {
-        "name": "Chaos Demon",
-        "hp": 250,
-        "attack": 70
-    },
-    {
-        "name": "Hydra",
-        "hp": 300,
-        "attack": 60
     }
 ]

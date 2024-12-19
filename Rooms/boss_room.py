@@ -2,8 +2,8 @@ from Rooms.enemy_room import EnemyRoom
 from Player.player import Player
 
 class BossRoom(EnemyRoom):
-    def __init__(self, player : Player):
-        super().__init__(player)
+    def __init__(self, encounter_count : int):
+        super().__init__(encounter_count)
 
     def onEnter(self):
         self.enemies = ['Dragon']

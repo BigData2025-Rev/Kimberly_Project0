@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Sea Serpent",
+        "hp": 200,
+        "attack": 50
+    },
+    {
+        "name": "Stone Golem",
+        "hp": 250,
+        "attack": 20
+    },
+    {
+        "name": "Chaos Demon",
+        "hp": 250,
+        "attack": 70
+    },
+    {
+        "name": "Hydra",
+        "hp": 300,
+        "attack": 60
+    }
+]

@@ -13,7 +13,7 @@ class Player:
         self.max_hp = 100.0
         self.mana = 100.0
         self.encounter_count = 1
-        self.seed = 0
+        self.random_state = random.getstate()
 
         # Spell stats
         self.damage_reduction = 0 # % damage reduction
@@ -25,6 +25,7 @@ class Player:
 
     # save player data to playerData.json
     def save(self):
+        random_state = random.getstate()
         data = {
             'hp': self.hp,
             'attack': self.attack,
@@ -34,7 +35,11 @@ class Player:
             'max_hp': self.max_hp,
             'mana': self.mana,
             'encounter_count': self.encounter_count,
-            'seed': self.seed
+            'random_state': {
+                'seed': random_state[0],
+                'state': list(random_state[1]),
+                'gauss': random_state[2]
+            }
         }
 
         with open('GameData/playerData.json', 'w') as file:
@@ -56,12 +61,13 @@ class Player:
         print('You died!')
 
     # Calculate damage taken based on player defense and damage reduction
-    def playerHurt(self, damage):
+    def takeDamage(self, damage):
         damage -= self.defense
         if damage < 0:
             damage = 0
         
         self.hp -= damage
+        print(f'You take {damage} damage!')
         if self.hp < 0:
             self.die()
 
@@ -109,7 +115,8 @@ class Player:
             self.max_hp = data['max_hp']
             self.mana = data['mana']
             self.encounter_count = data['encounter_count']
-            self.seed = data['seed']
+            state = data['random_state']
+            random.setstate((state['seed'], tuple(state['state']), state['gauss']))
             return True
         else:
             return False
