@@ -77,12 +77,10 @@ def begin_combat(player: Player, room: EnemyRoom):
 #Shop loop, used for shop rooms
 def shop(player: Player, room: ShopRoom):
     while room.isActive():
-        action = options_prompt("What would you like to do?", ["Buy", "Leave"])
-        if action == 0:
-            room.buy()
-        elif action == 1:
-            print("You leave the shop.")
-            player.roomReset()
+        print()
+        action = options_prompt("What would you like to purchase?", room.getOptions())
+        room.handleInput(action, player)       
+
 
 #Method to generate a new room
 def getRoom(encounter_count : int):
@@ -104,7 +102,7 @@ def end_room() -> bool:
 #Main game loop
 while player.isAlive():
     player.printStats()
-    print(f'You enter a new room!')
+    print(f"{Colors.BLUE}Room {player.encounter_count}{Colors.END}")
     room = getRoom(player.encounter_count)
     room.onEnter()
 

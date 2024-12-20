@@ -4,6 +4,7 @@ import json
 import random
 from Util.colors import Colors
 
+
 class Player:
     def __init__(self):
         self.hp = 100.0
@@ -121,4 +122,43 @@ class Player:
             return True
         else:
             return False
+        
+    #Shop functions to modify stats when purchasing items
+    def buyHealthPotion(self, cost):
+        if self.gold >= cost:
+            self.gold -= cost
+            self.hp += 20
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp
+            print(f"{Colors.YELLOW}You have purchased a health potion!{Colors.END}")
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase a health potion!{Colors.END}")
+    
+    def buyAttackUpgrade(self, cost):
+        if self.gold >= cost:
+            self.gold -= cost
+            self.attack += 5
+            print(f"{Colors.YELLOW}Your attack has increased by 5!{Colors.END}")
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+
+    def buyDefenseUpgrade(self, cost):
+        if self.gold >= cost:
+            self.gold -= cost
+            self.defense += 5
+            print(f"{Colors.YELLOW}Your defense has increased by 5!{Colors.END}")
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+
+    def buyMaxHPUpgrade(self, cost):
+        if self.gold >= cost:
+            self.gold -= cost
+            self.max_hp += 20
+            self.hp += 20
+            print(f"{Colors.YELLOW}Your max HP has increased by 20!{Colors.END}")
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+
+
+    
     

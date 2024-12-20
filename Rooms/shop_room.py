@@ -1,44 +1,54 @@
 from Player.player import Player
 from Rooms.room import Room
+import json
+import random
+
+
+items = []
+with open('GameData/shopItems.json', 'r') as file:
+    items = json.load(file)
 
 class ShopRoom(Room):
     def __init__(self, encounter_count: int):
         super().__init__(encounter_count)
-        self.items = ['Potion', 'Sword', 'Shield', 'Armor']
+        self.items_for_sale = []
+        self.active = True
 
     def onEnter(self):
+        #pick 3 random items from items, shop can sell multiple of the same item
+        self.items_for_sale = []
+        for i in range(3):
+            item = random.choice(items)
+            self.items_for_sale.append(item)
         print('You have entered a shop room!')
-        print('Items for sale:')
-        for item in self.items:
-            print(f' - {item}')
 
     def onExit(self):
         pass
 
     def getOptions(self):
-        return ['Buy', 'Leave']
+        return [self.itemToString(item) for item in self.items_for_sale] + ['Leave']
+        #return self.items_for_sale + ['Leave']
 
-    def handleInput(self, action):
-        if action == 'Buy':
-            self.buy()
-        elif action == 'Leave':
-            print('You leave the shop.')
-            self.player.roomReset()
-
-    def buy(self):
-        print('What would you like to buy?')
-        for item in self.items:
-            print(f' - {item}')
-
-        item = input('Enter the name of the item you would like to buy: ')
-        if item in self.items:
-            if item == 'Potion':
-                self.player.buyPotion()
-            elif item == 'Sword':
-                self.player.buySword()
-            elif item == 'Shield':
-                self.player.buyShield()
-            elif item == 'Armor':
-                self.player.buyArmor()
+    def handleInput(self, action, player : Player):
+        if action == len(self.items_for_sale):
+            self.active = False
+            print('Leaving shop room')
         else:
-            print('Invalid item name!')
+            item = self.items_for_sale[action]
+            item_id = item['name']
+            if item_id == 'Health Potion':
+                player.buyHealthPotion(item['cost'])
+            elif item_id == 'Max Health Upgrade':
+                player.buyMaxHPUpgrade(item['cost'])
+            elif item_id == 'Attack Upgrade':
+                player.buyAttackUpgrade(item['cost'])
+            elif item_id == 'Defense Upgrade':
+                player.buyDefenseUpgrade(item['cost'])
+            self.items_for_sale.remove(item)
+
+    def itemToString(self, item):
+        return f'{item["name"]}: {item["cost"]} gold - {item["description"]}'
+
+
+    def isActive(self):
+        return self.active

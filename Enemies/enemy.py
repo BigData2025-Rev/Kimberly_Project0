@@ -12,7 +12,7 @@ class Enemy():
             self.hp = rand_enemy['hp']
             self.attack = rand_enemy['attack']
 
-        #To do: Implement scaling based on encounter_count
+        #To do: Implement scaling based on encounter_count (every 10 rooms, shift window of enemies + 1)
 
     #Override to string method
     def __str__(self):
