@@ -1,12 +1,13 @@
 import json
 import random as r
+from Util.colors import Colors
 
 class Enemy():
     #Pulls a random enemy from the enemyList.json file
     def __init__(self, encounter_count : int):
         with open('GameData/enemyList.json', 'r') as file:
             data = json.load(file)
-            rand_enemy = data[r.randint(0, 3)] #later change to be based on encounter_count
+            rand_enemy = data[r.randint(0, 2)] #later change to be based on encounter_count
             self.name = rand_enemy['name']
             self.hp = rand_enemy['hp']
             self.attack = rand_enemy['attack']
@@ -30,4 +31,4 @@ class Enemy():
         player.takeDamage(self.attack)
 
     def die(self):
-        print(f'The {self.name} has died!')
+        print(f'{Colors.YELLOW}The {self.name} has died!{Colors.END}')

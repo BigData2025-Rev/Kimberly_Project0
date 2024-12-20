@@ -2,6 +2,7 @@ from Player.player import Player
 from Rooms.enemy_room import EnemyRoom
 from Rooms.shop_room import ShopRoom
 from Rooms.boss_room import BossRoom
+from Util.colors import Colors
 import random as r
 
 player = Player()
@@ -33,8 +34,9 @@ def options_prompt(question: str, options: list[str]) -> int:
     while selected < 0 or selected >= len(options):
         print(question)
         for i in range(len(options)):
-            print(f'{i + 1}: {options[i]}')
-
+            #color the number cyan
+            print(Colors.CYAN + f'{i + 1}: ' + Colors.END + f'{options[i]}')
+            #print(f'{i + 1}: {options[i]}')
         try:
             selected = int(input("Enter your selection: "))-1
         except ValueError:
@@ -49,15 +51,19 @@ def options_prompt(question: str, options: list[str]) -> int:
 #combat loop, used for boss rooms and enemy rooms
 def begin_combat(player: Player, room: EnemyRoom):
     while room.isActive() and player.isAlive():
-        print()
-        action = options_prompt("Which enemy would you like to attack?", room.getOptions())
+        action = -1
+        while(action == -1):
+            print()
+            action = options_prompt("Which enemy would you like to attack?", room.getOptions())
+            if room.enemies[action].hp <= 0:
+                print("That enemy is already defeated. Please select another enemy.")
+                action = -1
 
         #Player turn
-        if action == 0:
-            print("You attack the enemy!")
-            damage = player.attackEnemy()
-            print(f'You deal {damage} damage to the enemy!')
-            room.enemies[action].takeDamage(damage)
+        damage = player.attackEnemy()
+        print(f'You deal {Colors.RED}{damage}{Colors.END} damage to the enemy!')
+        
+        room.enemies[action].takeDamage(damage)
         print()
 
 

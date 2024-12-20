@@ -2,6 +2,7 @@
 import os
 import json
 import random
+from Util.colors import Colors
 
 class Player:
     def __init__(self):
@@ -57,7 +58,8 @@ class Player:
     # Calculate damage dealt based on player attack
     def die(self):
         self.save()
-        print('You died!')
+        #in red
+        print(f'{Colors.RED}You died!{Colors.END}')
 
     # Calculate damage taken based on player defense and damage reduction
     def takeDamage(self, damage):
@@ -66,7 +68,7 @@ class Player:
             damage = 0
         
         self.hp -= damage
-        print(f'You take {damage} damage!')
+        print(f'You take {Colors.RED}{damage}{Colors.END} damage!')
         if self.hp < 0:
             self.die()
 
@@ -89,7 +91,7 @@ class Player:
         self.mana = 100
         
     def printStats(self):
-        print("Current Stats:")
+        print(f"{Colors.GREEN}Current Stats:{Colors.END}")
         print(f"HP: {self.hp}, Attack: {self.attack}, Defense: {self.defense}, Gold: {self.gold}")
         print()
 

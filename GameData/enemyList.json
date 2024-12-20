@@ -1,33 +1,33 @@
 [
     {
         "name": "Goblin",
-        "hp": 20,
-        "attack": 5
+        "hp": 10,
+        "attack": 3
     },
     {
         "name": "Zombie",
         "hp": 30,
-        "attack": 10
+        "attack": 2
     },
     {
-        "name": "Harpy",
-        "hp": 35,
-        "attack": 8
+        "name": "Wolf",
+        "hp": 15,
+        "attack": 6
     },
     {
         "name": "Ice Wraith",
-        "hp": 50,
-        "attack": 15
+        "hp": 25,
+        "attack": 7
     },
     {
         "name": "Skeleton Warrior",
-        "hp": 50,
-        "attack": 10
+        "hp": 40,
+        "attack": 4
     },
     {
         "name": "Orc",
-        "hp": 60,
-        "attack": 15
+        "hp": 35,
+        "attack": 5
     },
     {
         "name": "Shadow Assassin",

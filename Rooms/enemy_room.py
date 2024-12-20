@@ -3,6 +3,7 @@ from Rooms.room import Room
 import random as r
 from Player.player import Player
 from Enemies.enemy import Enemy
+from Util.colors import Colors
 
 class EnemyRoom (Room):
     def __init__(self, encounter_count : int):
@@ -21,12 +22,21 @@ class EnemyRoom (Room):
         #reward player with gold or items
         pass
 
+    #Function called on enemy turn
+    #Enemy can attack 1 to n times, where n is the number of alive in the room. The same enemy can attack multiple times
     def attackPlayer(self, player : Player):
         print("Enemy turn!")
-        #Enemy can attack 1 to n times, where n is the number of alive in the room (1 enemy can attack multiple times)
-        num_attacks = r.randint(1, len(self.enemies))
+        alive_enemies = []
+        for enemy in self.enemies:
+            if enemy.hp > 0:
+                alive_enemies.append(enemy)
+
+        if len(alive_enemies) == 0:
+            print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
+            return
+        num_attacks = r.randint(1, len(alive_enemies))
         for i in range(num_attacks):
-            enemy : Enemy = r.choice(self.enemies)
+            enemy : Enemy = r.choice(alive_enemies)
             enemy.attackPlayer(player)
 
     def getOptions(self):
