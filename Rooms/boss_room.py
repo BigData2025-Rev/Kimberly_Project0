@@ -1,32 +1,21 @@
 from Rooms.enemy_room import EnemyRoom
+from Enemies.enemy import Enemy
 from Player.player import Player
+import json
+from Util.colors import Colors
 
 class BossRoom(EnemyRoom):
     def __init__(self, encounter_count : int):
         super().__init__(encounter_count)
 
     def onEnter(self):
-        self.enemies = ['Dragon']
-        print('You have entered the boss room!')
-        print('The boss is a mighty dragon!')
+        #pick the boss from the boss list, encounter_count%10
+        self.enemies.append(Enemy(self.encounter_count))
+        print(f'You have entered a boss room!')
+        print(f'The boss is: {[str(enemy) for enemy in self.enemies]}')
 
-    def onExit(self):
-        print("You have defeated the boss!")
+    def onExit(self, player : Player):
+        print(f"{Colors.YELLOW}You have defeated the boss!{Colors.END}")
+        player.rewardGold(100)
+
         #reward player with gold
-
-    def isActive(self):
-        return self.enemies != []
-
-    def attackPlayer(self):
-        print('The dragon attacks you!')
-        self.player.takeDamage(10)
-
-    def getOptions(self):
-        return ['Attack', 'Run']
-
-    def handleInput(self, action):
-        if action == 'Attack':
-            self.attackPlayer()
-        elif action == 'Run':
-            print('You run away from the dragon!')
-            self.player.roomReset()

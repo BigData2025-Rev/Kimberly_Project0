@@ -14,7 +14,7 @@ class Room(ABC):
 
     #Method called when player exits the room
     @abstractmethod
-    def onExit(self):
+    def onExit(self, player):
         pass
 
 

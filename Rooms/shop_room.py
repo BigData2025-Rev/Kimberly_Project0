@@ -22,7 +22,7 @@ class ShopRoom(Room):
             self.items_for_sale.append(item)
         print('You have entered a shop room!')
 
-    def onExit(self):
+    def onExit(self, player):
         pass
 
     def getOptions(self):
@@ -36,15 +36,18 @@ class ShopRoom(Room):
         else:
             item = self.items_for_sale[action]
             item_id = item['name']
-            if item_id == 'Health Potion':
-                player.buyHealthPotion(item['cost'])
+            if item_id == 'Big Health Potion':
+                success = player.buyHealthPotion(item['cost'], 0.5)
             elif item_id == 'Max Health Upgrade':
-                player.buyMaxHPUpgrade(item['cost'])
+                success = player.buyMaxHPUpgrade(item['cost'])
             elif item_id == 'Attack Upgrade':
-                player.buyAttackUpgrade(item['cost'])
+                success = player.buyAttackUpgrade(item['cost'])
             elif item_id == 'Defense Upgrade':
-                player.buyDefenseUpgrade(item['cost'])
-            self.items_for_sale.remove(item)
+                success = player.buyDefenseUpgrade(item['cost'])
+            elif item_id == 'Small Health Potion':
+                success = player.buyHealthPotion(item['cost'], 0.25)
+            if success:
+                self.items_for_sale.remove(item)
 
     def itemToString(self, item):
         return f'{item["name"]}: {item["cost"]} gold - {item["description"]}'

@@ -122,42 +122,54 @@ class Player:
             return True
         else:
             return False
+
+    def rewardGold(self, gold):
+        self.gold += gold
+        print(f"{Colors.YELLOW}You have received {gold} gold!{Colors.END}")
         
     #Shop functions to modify stats when purchasing items
-    def buyHealthPotion(self, cost):
+    def buyHealthPotion(self, cost: int, percentage: float) -> bool:
         if self.gold >= cost:
             self.gold -= cost
-            self.hp += 20
+            self.hp += self.max_hp * percentage
             if self.hp > self.max_hp:
                 self.hp = self.max_hp
-            print(f"{Colors.YELLOW}You have purchased a health potion!{Colors.END}")
+            print(f"{Colors.YELLOW}You have purchased a health potion and now have {self.hp}/{self.max_hp}hp!{Colors.END}")
+            return True
         else:
             print(f"{Colors.RED}You do not have enough gold to purchase a health potion!{Colors.END}")
+            return False
     
-    def buyAttackUpgrade(self, cost):
+    def buyAttackUpgrade(self, cost) -> bool:
         if self.gold >= cost:
             self.gold -= cost
-            self.attack += 5
-            print(f"{Colors.YELLOW}Your attack has increased by 5!{Colors.END}")
+            self.attack += 3
+            print(f"{Colors.YELLOW}Your attack has increased by 3!{Colors.END}")
+            return True
         else:
             print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
 
-    def buyDefenseUpgrade(self, cost):
+    def buyDefenseUpgrade(self, cost) -> bool:
         if self.gold >= cost:
             self.gold -= cost
-            self.defense += 5
-            print(f"{Colors.YELLOW}Your defense has increased by 5!{Colors.END}")
+            self.defense += 2
+            print(f"{Colors.YELLOW}Your defense has increased by 2!{Colors.END}")
+            return True
         else:
             print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
 
-    def buyMaxHPUpgrade(self, cost):
+    def buyMaxHPUpgrade(self, cost) -> bool:
         if self.gold >= cost:
             self.gold -= cost
             self.max_hp += 20
             self.hp += 20
             print(f"{Colors.YELLOW}Your max HP has increased by 20!{Colors.END}")
+            return True
         else:
             print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
 
 
     

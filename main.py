@@ -3,6 +3,7 @@ from Rooms.enemy_room import EnemyRoom
 from Rooms.shop_room import ShopRoom
 from Rooms.boss_room import BossRoom
 from Util.colors import Colors
+from Enemies.enemy import load_enemy_data
 import random as r
 
 player = Player()
@@ -25,6 +26,7 @@ else:
     #To do: Add add intro
 
 print()
+load_enemy_data()
 
 
 #Loops through options and returns the index of the selected option
@@ -86,7 +88,7 @@ def shop(player: Player, room: ShopRoom):
 def getRoom(encounter_count : int):
     if encounter_count % 10 == 0:
         return BossRoom(encounter_count)
-    elif encounter_count % 10 == 9:
+    elif encounter_count % 10 == 9 or encounter_count % 10 == 4:
         return ShopRoom(encounter_count)
     else:
         return EnemyRoom(encounter_count)
@@ -101,6 +103,7 @@ def end_room() -> bool:
 
 #Main game loop
 while player.isAlive():
+    print('---------------------------------------------------\n')
     player.printStats()
     print(f"{Colors.BLUE}Room {player.encounter_count}{Colors.END}")
     room = getRoom(player.encounter_count)
@@ -113,7 +116,8 @@ while player.isAlive():
     elif isinstance(room, ShopRoom):
         shop(player, room)
 
-    room.onExit()
+    room.onExit(player)
+    print()
     if not end_room():
         break
 

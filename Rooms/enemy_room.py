@@ -18,9 +18,11 @@ class EnemyRoom (Room):
         print(f'You have entered an enemy room! There are {len(self.enemies)} enemies in the room!')
         print(f'The enemies are: {[str(enemy) for enemy in self.enemies]}')
 
-    def onExit(self):
+    def onExit(self, player : Player):
         #reward player with gold or items
-        pass
+        player.rewardGold(10 * len(self.enemies))
+        print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
+
 
     #Function called on enemy turn
     #Enemy can attack 1 to n times, where n is the number of alive in the room. The same enemy can attack multiple times
@@ -32,7 +34,6 @@ class EnemyRoom (Room):
                 alive_enemies.append(enemy)
 
         if len(alive_enemies) == 0:
-            print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
             return
         num_attacks = r.randint(1, len(alive_enemies))
         for i in range(num_attacks):

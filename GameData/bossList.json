@@ -1,22 +1,22 @@
 [
     {
         "name": "Sea Serpent",
-        "hp": 200,
-        "attack": 50
+        "hp": 100,
+        "attack": 12
     },
     {
         "name": "Stone Golem",
-        "hp": 250,
-        "attack": 20
+        "hp": 175,
+        "attack": 18
     },
     {
         "name": "Chaos Demon",
         "hp": 250,
-        "attack": 70
+        "attack": 32
     },
     {
         "name": "Hydra",
-        "hp": 300,
-        "attack": 60
+        "hp": 320,
+        "attack": 40
     }
 ]
