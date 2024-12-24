@@ -15,10 +15,12 @@ class ShopRoom(Room):
         self.active = True
 
     def onEnter(self):
-        #pick 3 random items from items, shop can sell multiple of the same item
+        #pick 3 random items from items, shop can only sell one of each item
         self.items_for_sale = []
         for i in range(3):
             item = random.choice(items)
+            while item in self.items_for_sale:
+                item = random.choice(items)
             self.items_for_sale.append(item)
         print('You have entered a shop room!')
 

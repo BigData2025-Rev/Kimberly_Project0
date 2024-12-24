@@ -20,7 +20,7 @@ class EnemyRoom (Room):
 
     def onExit(self, player : Player):
         #reward player with gold or items
-        player.rewardGold(10 * len(self.enemies))
+        player.rewardGold(5 * len(self.enemies) + 15)
         print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
 
 

@@ -4,6 +4,8 @@ import json
 import random
 from Util.colors import Colors
 
+DEF_SCALING = 10 # Scaling factor for defense calculation
+
 
 class Player:
     def __init__(self):
@@ -64,12 +66,15 @@ class Player:
 
     # Calculate damage taken based on player defense and damage reduction
     def takeDamage(self, damage):
-        damage -= self.defense
+        #Formula: Damage Taken = Incoming Damage × (1 / (1 + Defense / Scaling Factor))
+        # damage -= self.defense
+        damage = damage * (1 / (1 + self.defense / DEF_SCALING))
+
         if damage < 0:
             damage = 0
         
         self.hp -= damage
-        print(f'You take {Colors.RED}{damage}{Colors.END} damage!')
+        print(f'You take {Colors.RED}{"{0:.2f}".format(damage)}{Colors.END} damage!')
         if self.hp < 0:
             self.die()
 
@@ -93,7 +98,7 @@ class Player:
         
     def printStats(self):
         print(f"{Colors.GREEN}Current Stats:{Colors.END}")
-        print(f"HP: {self.hp}, Attack: {self.attack}, Defense: {self.defense}, Gold: {self.gold}")
+        print(f"HP: {"{0:.2f}".format(self.hp)}/{int(self.max_hp)}, Attack: {"{0:.2f}".format(self.attack)}, Defense: {"{0:.2f}".format(self.defense)}, Gold: {self.gold}")
         print()
 
     def isAlive(self):
@@ -134,7 +139,7 @@ class Player:
             self.hp += self.max_hp * percentage
             if self.hp > self.max_hp:
                 self.hp = self.max_hp
-            print(f"{Colors.YELLOW}You have purchased a health potion and now have {self.hp}/{self.max_hp}hp!{Colors.END}")
+            print(f"{Colors.YELLOW}You have purchased a health potion and now have {"{0:.2f}".format(self.hp)}/{int(self.max_hp)}hp!{Colors.END}")
             return True
         else:
             print(f"{Colors.RED}You do not have enough gold to purchase a health potion!{Colors.END}")

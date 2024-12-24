@@ -6,7 +6,7 @@
     },
     {
         "name": "Zombie",
-        "hp": 30,
+        "hp": 25,
         "attack": 2
     },
     {
@@ -26,8 +26,8 @@
     },
     {
         "name": "Orc",
-        "hp": 35,
-        "attack": 5
+        "hp": 30,
+        "attack": 12
     },
     {
         "name": "Shadow Assassin",

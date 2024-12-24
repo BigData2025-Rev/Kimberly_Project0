@@ -23,7 +23,9 @@ else:
     except:
         print('Invalid seed, using default seed of 0')
         seed = 0
-    #To do: Add add intro
+        r.seed(seed)
+        player.random_state = r.getstate()
+        player.save()
 
 print()
 load_enemy_data()
@@ -63,7 +65,7 @@ def begin_combat(player: Player, room: EnemyRoom):
 
         #Player turn
         damage = player.attackEnemy()
-        print(f'You deal {Colors.RED}{damage}{Colors.END} damage to the enemy!')
+        print(f'You deal {Colors.RED}{"{0:.2f}".format(damage)}{Colors.END} damage to the enemy!')
         
         room.enemies[action].takeDamage(damage)
         print()
@@ -88,7 +90,7 @@ def shop(player: Player, room: ShopRoom):
 def getRoom(encounter_count : int):
     if encounter_count % 10 == 0:
         return BossRoom(encounter_count)
-    elif encounter_count % 10 == 9 or encounter_count % 10 == 4:
+    elif encounter_count % 10 == 9 or encounter_count % 10 == 3 or encounter_count % 10 == 6:
         return ShopRoom(encounter_count)
     else:
         return EnemyRoom(encounter_count)
