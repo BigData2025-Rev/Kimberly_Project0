@@ -1,6 +1,6 @@
 from Player.player import Player
 from Rooms.enemy_room import EnemyRoom
-from Rooms.shop_room import ShopRoom
+from Rooms.shop_room import ShopRoom, loadItems
 from Rooms.boss_room import BossRoom
 from Util.colors import Colors
 from Enemies.enemy import load_enemy_data
@@ -29,6 +29,7 @@ else:
 
 print()
 load_enemy_data()
+loadItems()
 
 
 #Loops through options and returns the index of the selected option
@@ -97,7 +98,6 @@ def getRoom(encounter_count : int):
 
 # Called at the end of each room
 def end_room() -> bool:
-    player.roomReset()
     player.encounter_count += 1
     player.save()
     selected = options_prompt("Do you want to continue?", ["Continue", "Quit"])

@@ -21,8 +21,8 @@ class Enemy():
         if encounter_count % 10 == 0:
             enemy_data = boss_list[(encounter_count // 10) - 1]
         else:
-            diff = encounter_count // 10
-            enemy_data = enemy_list[r.randint(diff, diff+2)] #later change to be based on encounter_count
+            diff = (encounter_count // 10) * 2
+            enemy_data = enemy_list[r.randint(diff, diff+3)] #later change to be based on encounter_count
         
         self.name = enemy_data['name']
         self.hp = enemy_data['hp']

@@ -18,5 +18,10 @@
         "name": "Hydra",
         "hp": 275,
         "attack": 25
+    },
+    {
+        "name": "Minotaur",
+        "hp": 350,
+        "attack": 35
     }
 ]

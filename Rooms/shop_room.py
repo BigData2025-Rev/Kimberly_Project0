@@ -4,9 +4,15 @@ import json
 import random
 
 
-items = []
-with open('GameData/shopItems.json', 'r') as file:
-    items = json.load(file)
+items = [] # Upgrades and items that can be bought
+perks = [] # One time pucahse items
+def loadItems():
+    global items
+    global perks
+    with open('GameData/shopItems.json', 'r') as file:
+        item_data = json.load(file)
+        items = item_data['ShopList']
+        perks = item_data['PerkList']
 
 class ShopRoom(Room):
     def __init__(self, encounter_count: int):

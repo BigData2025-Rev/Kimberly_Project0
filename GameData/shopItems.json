@@ -1,27 +1,57 @@
-[
-    {
-        "name": "Big Health Potion",
-        "cost": 30,
-        "description": "Restores 50% of your max health"
-    },
-    {
-        "name": "Max Health Upgrade",
-        "cost": 50,
-        "description": "Increases your max health by 20"
-    },
-    {
-        "name": "Attack Upgrade",
-        "cost": 40,
-        "description": "Increases your attack by 3"
-    },
-    {
-        "name": "Defense Upgrade",
-        "cost": 45,
-        "description": "Increases your defense by 2"
-    },
-    {
-        "name": "Small Health Potion",
-        "cost": 15,
-        "description": "Restores 25% of your max health"
-    }
-]
+{
+    "ShopList": [
+        {
+            "name": "Big Health Potion",
+            "cost": 30,
+            "description": "Restores 50% of your max health"
+        },
+        {
+            "name": "Max Health Upgrade",
+            "cost": 50,
+            "description": "Increases your max health by 25"
+        },
+        {
+            "name": "Attack Upgrade",
+            "cost": 40,
+            "description": "Increases your attack by 3"
+        },
+        {
+            "name": "Defense Upgrade",
+            "cost": 45,
+            "description": "Increases your defense by 2"
+        },
+        {
+            "name": "Small Health Potion",
+            "cost": 15,
+            "description": "Restores 25% of your max health"
+        }
+    ],
+    "PerkList":[
+        {
+            "name": "Critical Strike",
+            "cost": 100,
+            "description": "30% chance to deal double damage"
+        },
+        {
+            "name": "Health Regen",
+            "cost": 100,
+            "description": "Regenerate 5% of your max health when you enter a room"
+        },
+        {
+            "name": "Dodge",
+            "cost": 100,
+            "description": "15% chance to dodge incoming attacks"
+        },
+        {
+            "name": "AOE Upgrade",
+            "cost": 100,
+            "description": "Attacking an enemy will additionally deal 40% damage to all other enemies"
+        },
+        {
+            "name": "Counter Strike",
+            "cost": 100,
+            "description": "5% chance to negate all damage and deal 150% damage to the attacker"
+        }
+    ]
+}
+

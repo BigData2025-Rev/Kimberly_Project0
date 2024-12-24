@@ -4,7 +4,7 @@ import json
 import random
 from Util.colors import Colors
 
-DEF_SCALING = 10 # Scaling factor for defense calculation
+DEF_SCALING = 20 # Scaling factor for defense calculation
 
 
 class Player:
@@ -15,16 +15,14 @@ class Player:
         self.gold = 0
         self.inventory = []
         self.max_hp = 100.0
-        self.mana = 100.0
         self.encounter_count = 1
         self.random_state = random.getstate()
 
-        # Spell stats
-        self.damage_reduction = 0 # % damage reduction
+        # Item effects, To be implemented later
         self.critical_chance = 0 # % critical chance
-        self.counter = False # if True, player will counter attack
-        self.active_spell = None # spell that is currently active
-        self.mana = 100 # player mana
+        self.counter = False # if True, player can counter attack
+        self.can_AOE = False # if True, player can attack all enemies
+        self.dodge_chance = 0 # % chance to dodge an attack
 
 
     # save player data to playerData.json
@@ -37,7 +35,6 @@ class Player:
             'gold': self.gold,
             'inventory': self.inventory,
             'max_hp': self.max_hp,
-            'mana': self.mana,
             'encounter_count': self.encounter_count,
             'random_state': {
                 'seed': random_state[0],
@@ -88,13 +85,13 @@ class Player:
             return self.attack
         
 
-    # Resets player mana when entering a new room
-    def roomReset(self):
-        self.damage_reduction = 0
-        self.critical_chance = 0
-        self.counter = False
-        self.active_spell = None
-        self.mana = 100
+    # Probably not needed for now
+    # def roomReset(self):
+    #     self.damage_reduction = 0
+    #     self.critical_chance = 0
+    #     self.counter = False
+    #     self.active_spell = None
+    #     self.mana = 100
         
     def printStats(self):
         print(f"{Colors.GREEN}Current Stats:{Colors.END}")
@@ -120,7 +117,6 @@ class Player:
             self.gold = data['gold']
             self.inventory = data['inventory']
             self.max_hp = data['max_hp']
-            self.mana = data['mana']
             self.encounter_count = data['encounter_count']
             state = data['random_state']
             random.setstate((state['seed'], tuple(state['state']), state['gauss']))
@@ -168,9 +164,9 @@ class Player:
     def buyMaxHPUpgrade(self, cost) -> bool:
         if self.gold >= cost:
             self.gold -= cost
-            self.max_hp += 20
-            self.hp += 20
-            print(f"{Colors.YELLOW}Your max HP has increased by 20!{Colors.END}")
+            self.max_hp += 25
+            self.hp += 25
+            print(f"{Colors.YELLOW}Your max HP has increased by 25!{Colors.END}")
             return True
         else:
             print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
