@@ -1,7 +1,6 @@
 from Rooms.enemy_room import EnemyRoom
 from Enemies.enemy import Enemy
 from Player.player import Player
-import json
 from Util.colors import Colors
 
 class BossRoom(EnemyRoom):
@@ -9,7 +8,6 @@ class BossRoom(EnemyRoom):
         super().__init__(encounter_count)
 
     def onEnter(self):
-        #pick the boss from the boss list, encounter_count%10
         self.enemies.append(Enemy(self.encounter_count))
         print(f'You have entered a boss room!')
         print(f'The boss is: {[str(enemy) for enemy in self.enemies]}')
@@ -17,5 +15,3 @@ class BossRoom(EnemyRoom):
     def onExit(self, player : Player):
         print(f"{Colors.YELLOW}You have defeated the boss!{Colors.END}")
         player.rewardGold(100)
-
-        #reward player with gold

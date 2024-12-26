@@ -7,6 +7,7 @@ from Enemies.enemy import load_enemy_data
 import random as r
 
 player = Player()
+BOSS_COUNT = 5
 
 print('Welcome to the game!')
 if player.loadData():
@@ -66,8 +67,14 @@ def begin_combat(player: Player, room: EnemyRoom):
 
         #Player turn
         damage = player.attackEnemy()
-        print(f'You deal {Colors.RED}{"{0:.2f}".format(damage)}{Colors.END} damage to the enemy!')
-        
+        #Check if player has AOE perk
+        aoe_damage = player.aoeDamage()
+        if aoe_damage > 0:
+            for i in range(len(room.enemies)):
+                if i != action and room.enemies[i].hp > 0:
+                    dmg = player.attackEnemy(aoe_damage)
+                    room.enemies[i].takeDamage(dmg)
+
         room.enemies[action].takeDamage(damage)
         print()
 
@@ -106,8 +113,9 @@ def end_room() -> bool:
 #Main game loop
 while player.isAlive():
     print('---------------------------------------------------\n')
-    player.printStats()
     print(f"{Colors.BLUE}Room {player.encounter_count}{Colors.END}")
+    player.startRoom()
+    player.printStats()
     room = getRoom(player.encounter_count)
     room.onEnter()
 
@@ -120,11 +128,16 @@ while player.isAlive():
 
     room.onExit(player)
     print()
-    if not end_room():
+    if player.encounter_count >= BOSS_COUNT * 10 or not end_room():
         break
+
+
 
 if not player.isAlive():
     print('Game over! You have died!')
+    player.removeSave()
+elif player.encounter_count >= BOSS_COUNT * 10:
+    print('Congratulations! You have made it to the end of the game!')
     player.removeSave()
 else:
     print("Quitting game!")

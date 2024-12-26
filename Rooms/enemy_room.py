@@ -1,4 +1,3 @@
-#Inherits from room.py
 from Rooms.room import Room
 import random as r
 from Player.player import Player
@@ -10,8 +9,8 @@ class EnemyRoom (Room):
         super().__init__(encounter_count)
         self.enemies = [] # list of enemies in the room, max 3
 
+    #Called when player enters the room
     def onEnter(self):
-        #generate a random selection of enemies
         enemy_count = r.randint(1, 3)
         for i in range(enemy_count):
             self.enemies.append(Enemy(self.encounter_count))
@@ -24,7 +23,7 @@ class EnemyRoom (Room):
         print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
 
 
-    #Function called on enemy turn
+    #Function called on enemy turn to direct enemies to attack
     #Enemy can attack 1 to n times, where n is the number of alive in the room. The same enemy can attack multiple times
     def attackPlayer(self, player : Player):
         print("Enemy turn!")
@@ -38,7 +37,13 @@ class EnemyRoom (Room):
         num_attacks = r.randint(1, len(alive_enemies))
         for i in range(num_attacks):
             enemy : Enemy = r.choice(alive_enemies)
-            enemy.attackPlayer(player)
+            if player.counterStrike():
+                print(f"{enemy.name} attacks and you counter!")
+                dmg = player.attackEnemy(enemy, player.counterDamage())
+                enemy.takeDamage(dmg)
+                continue
+            else:
+                enemy.attackPlayer(player)
 
     def getOptions(self):
         return self.enemies

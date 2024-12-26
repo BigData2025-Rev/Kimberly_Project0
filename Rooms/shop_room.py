@@ -28,6 +28,8 @@ class ShopRoom(Room):
             while item in self.items_for_sale:
                 item = random.choice(items)
             self.items_for_sale.append(item)
+        #Select one item from perks to add to the shop
+        self.items_for_sale.append(random.choice(perks))
         print('You have entered a shop room!')
 
     def onExit(self, player):
@@ -44,6 +46,7 @@ class ShopRoom(Room):
         else:
             item = self.items_for_sale[action]
             item_id = item['name']
+            success = False
             if item_id == 'Big Health Potion':
                 success = player.buyHealthPotion(item['cost'], 0.5)
             elif item_id == 'Max Health Upgrade':
@@ -56,6 +59,24 @@ class ShopRoom(Room):
                 success = player.buyHealthPotion(item['cost'], 0.25)
             if success:
                 self.items_for_sale.remove(item)
+
+            #perks
+            success = False
+            if item_id == 'Critical Strike':
+                success = player.buyCriticalChance(item['cost'])
+            elif item_id == 'Health Regen':
+                success = player.buyHealthRegen(item['cost'])
+            elif item_id == 'Dodge':
+                success = player.buyDodgeChance(item['cost'])
+            elif item_id == 'AOE Upgrade':
+                success = player.buyAOE(item['cost'])
+            elif item_id == 'Counter Strike':
+                success = player.buyCounter(item['cost'])
+
+            if success:
+                perks.remove(item)
+                self.items_for_sale.remove(item)
+
 
     def itemToString(self, item):
         return f'{item["name"]}: {item["cost"]} gold - {item["description"]}'

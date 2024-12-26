@@ -30,7 +30,7 @@
         {
             "name": "Critical Strike",
             "cost": 100,
-            "description": "30% chance to deal double damage"
+            "description": "20% chance to deal double damage"
         },
         {
             "name": "Health Regen",
@@ -40,7 +40,7 @@
         {
             "name": "Dodge",
             "cost": 100,
-            "description": "15% chance to dodge incoming attacks"
+            "description": "10% chance to dodge an attack"
         },
         {
             "name": "AOE Upgrade",
@@ -49,8 +49,8 @@
         },
         {
             "name": "Counter Strike",
-            "cost": 100,
-            "description": "5% chance to negate all damage and deal 150% damage to the attacker"
+            "cost": 150,
+            "description": "10% chance to negate all damage and deal 150% damage to the attacker"
         }
     ]
 }

@@ -6,6 +6,13 @@ from Util.colors import Colors
 
 DEF_SCALING = 20 # Scaling factor for defense calculation
 
+#Factors for perks
+REGEN = 0.05
+COUNTER_DMG = 1.5
+COUNTER_CHANCE = 0.1
+CRIT_CHANCE = 0.2
+AOE_DMG = 0.4
+DODGE_CHANCE = 0.1
 
 class Player:
     def __init__(self):
@@ -19,10 +26,13 @@ class Player:
         self.random_state = random.getstate()
 
         # Item effects, To be implemented later
-        self.critical_chance = 0 # % critical chance
-        self.counter = False # if True, player can counter attack
-        self.can_AOE = False # if True, player can attack all enemies
-        self.dodge_chance = 0 # % chance to dodge an attack
+        self.perks = {
+            'critical_chance': False,
+            'counter': False,
+            'can_AOE': False,
+            'dodge_chance': False,
+            'regen': False
+        }
 
 
     # save player data to playerData.json
@@ -40,6 +50,13 @@ class Player:
                 'seed': random_state[0],
                 'state': list(random_state[1]),
                 'gauss': random_state[2]
+            },
+            'perks':{
+                'critical_chance': self.perks['critical_chance'],
+                'counter': self.perks['counter'],
+                'can_AOE': self.perks['can_AOE'],
+                'dodge_chance': self.perks['dodge_chance'],
+                'regen': self.perks['regen']
             }
         }
 
@@ -55,46 +72,80 @@ class Player:
         self.inventory = []
         self.save()
 
+    # Called at the beginning of each room
+    def startRoom(self):
+        if self.perks['regen']:
+            regen_amount = self.max_hp * REGEN
+            self.hp += regen_amount
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp
+            print(f"{Colors.GREEN}+{regen_amount}HP{Colors.END}")
+
     # Calculate damage dealt based on player attack
     def die(self):
         self.save()
-        #in red
         print(f'{Colors.RED}You died!{Colors.END}')
 
-    # Calculate damage taken based on player defense and damage reduction
+    # Calculate damage taken based on player defense
     def takeDamage(self, damage):
-        #Formula: Damage Taken = Incoming Damage × (1 / (1 + Defense / Scaling Factor))
-        # damage -= self.defense
+        dodge_chance = 0
+        if self.perks['dodge_chance']:
+            dodge_chance = DODGE_CHANCE
+
+        if random.random() < dodge_chance:
+            print(f"{Colors.GREEN}You dodged the attack!{Colors.END}")
+            return
         damage = damage * (1 / (1 + self.defense / DEF_SCALING))
 
         if damage < 0:
             damage = 0
-        
         self.hp -= damage
         print(f'You take {Colors.RED}{"{0:.2f}".format(damage)}{Colors.END} damage!')
         if self.hp < 0:
             self.die()
 
-    # Calculate damage dealt based on player attack
-    def attackEnemy(self, critical_chance = 0) -> float:
-        #pull random number between 0 and 1
-        critical = random.random()
-        if critical < critical_chance:
-            return self.attack * 2
+    #If the player has bought the counter perk, they have a chance to counter attack when attacked
+    def counterStrike(self) -> bool:
+        if self.perks['counter']:
+            if random.random() < COUNTER_CHANCE:
+                return True
+        return False
+    
+    #Returns the damage dealt by a counter attack, if the player has the counter perk
+    def counterDamage(self):
+        if self.perks['counter']:
+            return COUNTER_DMG
         else:
-            return self.attack
-        
+            return 0
+    
+    #Returns the damage dealt by an AOE attack, if the player has the AOE perk
+    def aoeDamage(self):
+        if self.perks['can_AOE']:
+            return AOE_DMG
+        else:
+            return 0
 
-    # Probably not needed for now
-    # def roomReset(self):
-    #     self.damage_reduction = 0
-    #     self.critical_chance = 0
-    #     self.counter = False
-    #     self.active_spell = None
-    #     self.mana = 100
+
+
+    # Calculate damage dealt based on player attack
+    def attackEnemy(self, multiplier = 1) -> float:
+        if self.perks['critical_chance']:
+            critical_chance = CRIT_CHANCE
+        else:
+            critical_chance = 0
+        
+        if random.random() < critical_chance:
+            print(f"{Colors.RED}Critical hit!{Colors.END}")
+            damage = self.attack * 2 * multiplier
+        else:
+            damage = self.attack * multiplier
+
+        print(f'You deal {Colors.RED}{"{0:.2f}".format(damage)}{Colors.END} damage to the enemy!')
+        return damage
+        
         
     def printStats(self):
-        print(f"{Colors.GREEN}Current Stats:{Colors.END}")
+        print(f"{Colors.MAGENTA}Current Stats:{Colors.END}")
         print(f"HP: {"{0:.2f}".format(self.hp)}/{int(self.max_hp)}, Attack: {"{0:.2f}".format(self.attack)}, Defense: {"{0:.2f}".format(self.defense)}, Gold: {self.gold}")
         print()
 
@@ -120,6 +171,7 @@ class Player:
             self.encounter_count = data['encounter_count']
             state = data['random_state']
             random.setstate((state['seed'], tuple(state['state']), state['gauss']))
+            self.perks = data['perks']
             return True
         else:
             return False
@@ -172,6 +224,56 @@ class Player:
             print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
             return False
 
+    #Perk functions to modify player stats and abilities
+    def buyCriticalChance(self, cost) -> bool:
+        if self.gold >= cost:
+            self.gold -= cost
+            self.perks['critical_chance'] = True
+            print(f"{Colors.YELLOW}You now have a 20% chance for critical hits!{Colors.END}")
+            return True
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
+
+    def buyCounter(self, cost) -> bool:
+        if self.gold >= cost:
+            self.gold -= cost
+            self.perks['counter'] = True
+            print(f"{Colors.YELLOW}When attacked, you now have a 10% chance to counter attack!{Colors.END}")
+            return True
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
+        
+    def buyAOE(self, cost) -> bool:
+        if self.gold >= cost:
+            self.gold -= cost
+            self.perks['can_AOE'] = True
+            print(f"{Colors.YELLOW}Dealing damage will now do 40% damage to all enemies in a room!{Colors.END}")
+            return True
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
+        
+    def buyDodgeChance(self, cost) -> bool:
+        if self.gold >= cost:
+            self.gold -= cost
+            self.perks['dodge_chance'] = True
+            print(f"{Colors.YELLOW}You now have a 10% chance to dodge an attack!{Colors.END}")
+            return True
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
+    
+    def buyHealthRegen(self, cost) -> bool:
+        if self.gold >= cost:
+            self.gold -= cost
+            self.perks['regen'] = True
+            print(f"{Colors.YELLOW}You now regenerate 5% HP per turn!{Colors.END}")
+            return True
+        else:
+            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
+            return False
 
     
     
