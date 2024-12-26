@@ -14,4 +14,4 @@ class BossRoom(EnemyRoom):
 
     def onExit(self, player : Player):
         print(f"{Colors.YELLOW}You have defeated the boss!{Colors.END}")
-        player.rewardGold(100)
+        player.rewardGold(120)

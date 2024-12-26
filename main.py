@@ -46,10 +46,10 @@ def options_prompt(question: str, options: list[str]) -> int:
         try:
             selected = int(input("Enter your selection: "))-1
         except ValueError:
-            print("Invalid input! Please enter a number.")
+            print(f"{Colors.RED}Invalid input! Please enter a number.{Colors.END}")
 
         if selected < 0 or selected >= len(options):
-            print("Invalid input! Please enter a valid number.")
+            print(f"{Colors.RED}Invalid input! Please enter a valid number.{Colors.END}")
         print()
     return selected
 

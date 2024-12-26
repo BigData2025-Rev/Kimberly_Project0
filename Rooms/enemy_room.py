@@ -19,7 +19,7 @@ class EnemyRoom (Room):
 
     def onExit(self, player : Player):
         #reward player with gold or items
-        player.rewardGold(5 * len(self.enemies) + 20)
+        player.rewardGold(8 * len(self.enemies) + 20)
         print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
 
 
@@ -38,8 +38,8 @@ class EnemyRoom (Room):
         for i in range(num_attacks):
             enemy : Enemy = r.choice(alive_enemies)
             if player.counterStrike():
-                print(f"{enemy.name} attacks and you counter!")
-                dmg = player.attackEnemy(enemy, player.counterDamage())
+                print(f"{Colors.GREEN}{enemy.name} attacks and you counter!{Colors.END}")
+                dmg = player.attackEnemy(player.counterDamage())
                 enemy.takeDamage(dmg)
                 continue
             else:

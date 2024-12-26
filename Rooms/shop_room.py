@@ -29,7 +29,8 @@ class ShopRoom(Room):
                 item = random.choice(items)
             self.items_for_sale.append(item)
         #Select one item from perks to add to the shop
-        self.items_for_sale.append(random.choice(perks))
+        if len(perks) > 0:
+            self.items_for_sale.append(random.choice(perks))
         print('You have entered a shop room!')
 
     def onExit(self, player):
@@ -40,6 +41,7 @@ class ShopRoom(Room):
         #return self.items_for_sale + ['Leave']
 
     def handleInput(self, action, player : Player):
+        global perks
         if action == len(self.items_for_sale):
             self.active = False
             print('Leaving shop room')
