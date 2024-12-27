@@ -66,7 +66,6 @@ def begin_combat(player: Player, room: EnemyRoom):
                 action = -1
 
         #Player turn
-        damage = player.attackEnemy()
         #Check if player has AOE perk
         aoe_damage = player.aoeDamage()
         if aoe_damage > 0:
@@ -74,8 +73,12 @@ def begin_combat(player: Player, room: EnemyRoom):
                 if i != action and room.enemies[i].hp > 0:
                     dmg = player.attackEnemy(aoe_damage)
                     room.enemies[i].takeDamage(dmg)
-
-        room.enemies[action].takeDamage(damage)
+                elif i == action:
+                    dmg = player.attackEnemy()
+                    room.enemies[i].takeDamage(dmg)
+        else:
+            damage = player.attackEnemy()
+            room.enemies[action].takeDamage(damage)
         print()
         #Enemy turn
         if(room.isActive()):

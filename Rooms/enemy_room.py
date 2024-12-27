@@ -22,20 +22,21 @@ class EnemyRoom (Room):
         print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
 
 
+    def getAliveEnemies(self):
+        return [enemy for enemy in self.enemies if enemy.hp > 0]
+
     #Function called on enemy turn to direct enemies to attack
     #Enemy can attack 1 to n times, where n is the number of alive in the room. The same enemy can attack multiple times
     def attackPlayer(self, player : Player):
         
-        alive_enemies = []
-        for enemy in self.enemies:
-            if enemy.hp > 0:
-                alive_enemies.append(enemy)
+        alive_enemies = self.getAliveEnemies()
         print("Enemy turn!")
 
         if len(alive_enemies) == 0:
             return
         num_attacks = r.randint(1, len(alive_enemies))
         for i in range(num_attacks):
+            alive_enemies = self.getAliveEnemies()
             enemy : Enemy = r.choice(alive_enemies)
             if player.counterStrike():
                 print(f"{Colors.GREEN}{enemy.name} attacks and you counter!{Colors.END}")
@@ -44,6 +45,7 @@ class EnemyRoom (Room):
                 continue
             else:
                 enemy.attackPlayer(player)
+
 
     def getOptions(self):
         return self.enemies

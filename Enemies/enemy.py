@@ -36,6 +36,7 @@ class Enemy():
     
     def takeDamage(self, damage) -> bool:
         self.hp -= damage
+        print(f'You deal {Colors.RED}{"{0:.2f}".format(damage)}{Colors.END} damage to the {self.name}')
         if self.hp <= 0:
             self.die()
             self.hp = 0
