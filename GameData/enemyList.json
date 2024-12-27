@@ -57,12 +57,12 @@
     {
         "name": "Wraith",
         "hp": 70,
-        "attack": 20
+        "attack": 18
     },
     {
         "name": "Cursed Knight",
         "hp": 110,
-        "attack": 30
+        "attack": 22
     },
 
     {

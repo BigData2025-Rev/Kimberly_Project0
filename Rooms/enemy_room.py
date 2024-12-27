@@ -18,7 +18,6 @@ class EnemyRoom (Room):
         print(f'The enemies are: {[str(enemy) for enemy in self.enemies]}')
 
     def onExit(self, player : Player):
-        #reward player with gold or items
         player.rewardGold(8 * len(self.enemies) + 20)
         print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
 
@@ -26,11 +25,12 @@ class EnemyRoom (Room):
     #Function called on enemy turn to direct enemies to attack
     #Enemy can attack 1 to n times, where n is the number of alive in the room. The same enemy can attack multiple times
     def attackPlayer(self, player : Player):
-        print("Enemy turn!")
+        
         alive_enemies = []
         for enemy in self.enemies:
             if enemy.hp > 0:
                 alive_enemies.append(enemy)
+        print("Enemy turn!")
 
         if len(alive_enemies) == 0:
             return

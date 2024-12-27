@@ -30,7 +30,7 @@ else:
 
 print()
 load_enemy_data()
-loadItems()
+loadItems(player)
 
 
 #Loops through options and returns the index of the selected option
@@ -46,7 +46,7 @@ def options_prompt(question: str, options: list[str]) -> int:
         try:
             selected = int(input("Enter your selection: "))-1
         except ValueError:
-            print(f"{Colors.RED}Invalid input! Please enter a number.{Colors.END}")
+            selected = -1
 
         if selected < 0 or selected >= len(options):
             print(f"{Colors.RED}Invalid input! Please enter a valid number.{Colors.END}")
@@ -62,7 +62,7 @@ def begin_combat(player: Player, room: EnemyRoom):
             print()
             action = options_prompt("Which enemy would you like to attack?", room.getOptions())
             if room.enemies[action].hp <= 0:
-                print("That enemy is already defeated. Please select another enemy.")
+                print(f"{Colors.RED}That enemy is already defeated. Please select another enemy.{Colors.END}")
                 action = -1
 
         #Player turn
@@ -77,14 +77,12 @@ def begin_combat(player: Player, room: EnemyRoom):
 
         room.enemies[action].takeDamage(damage)
         print()
-
-
         #Enemy turn
-        room.attackPlayer(player)
+        if(room.isActive()):
+            room.attackPlayer(player)
+            print()
+            player.printStats()
 
-
-        print()
-        player.printStats()
 
 #Shop loop, used for shop rooms
 def shop(player: Player, room: ShopRoom):

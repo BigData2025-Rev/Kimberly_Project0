@@ -28,29 +28,34 @@
     ],
     "PerkList":[
         {
+            "id": "critical_chance",
             "name": "Critical Strike",
-            "cost": 100,
-            "description": "20% chance to deal double damage"
+            "cost": 80,
+            "description": "30% chance to deal double damage"
         },
         {
+            "id": "regen",
             "name": "Health Regen",
-            "cost": 100,
+            "cost": 80,
             "description": "Regenerate 5% of your max health when you enter a room"
         },
         {
+            "id": "dodge_chance",
             "name": "Dodge",
-            "cost": 100,
-            "description": "10% chance to dodge an attack"
+            "cost": 80,
+            "description": "20% chance to dodge an attack"
         },
         {
+            "id": "can_AOE",
             "name": "AOE Upgrade",
-            "cost": 100,
+            "cost": 150,
             "description": "Attacking an enemy will additionally deal 40% damage to all other enemies"
         },
         {
+            "id": "counter",
             "name": "Counter Strike",
-            "cost": 150,
-            "description": "10% chance to negate all damage and deal 150% damage to the attacker"
+            "cost": 120,
+            "description": "10% chance to negate an attack and deal 150% damage to the attacker"
         }
     ]
 }

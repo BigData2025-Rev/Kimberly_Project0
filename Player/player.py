@@ -10,9 +10,9 @@ DEF_SCALING = 20 # Scaling factor for defense calculation
 REGEN = 0.05
 COUNTER_DMG = 1.5
 COUNTER_CHANCE = 0.1
-CRIT_CHANCE = 0.2
+CRIT_CHANCE = 0.3 
 AOE_DMG = 0.4
-DODGE_CHANCE = 0.1
+DODGE_CHANCE = 0.2
 
 class Player:
     def __init__(self):
@@ -34,7 +34,9 @@ class Player:
             'regen': False
         }
 
-
+    def hasPerk(self, perk):
+        return self.perks[perk]
+    
     # save player data to playerData.json
     def save(self):
         random_state = random.getstate()
@@ -175,105 +177,8 @@ class Player:
             return True
         else:
             return False
+        
 
     def rewardGold(self, gold):
         self.gold += gold
         print(f"{Colors.YELLOW}You have received {gold} gold!{Colors.END}")
-        
-    #Shop functions to modify stats when purchasing items
-    def buyHealthPotion(self, cost: int, percentage: float) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.hp += self.max_hp * percentage
-            if self.hp > self.max_hp:
-                self.hp = self.max_hp
-            print(f"{Colors.YELLOW}You have purchased a health potion and now have {"{0:.2f}".format(self.hp)}/{int(self.max_hp)}hp!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase a health potion!{Colors.END}")
-            return False
-    
-    def buyAttackUpgrade(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.attack += 3
-            print(f"{Colors.YELLOW}Your attack has increased by 3!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-
-    def buyDefenseUpgrade(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.defense += 2
-            print(f"{Colors.YELLOW}Your defense has increased by 2!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-
-    def buyMaxHPUpgrade(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.max_hp += 25
-            self.hp += 25
-            print(f"{Colors.YELLOW}Your max HP has increased by 25!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-
-    #Perk functions to modify player stats and abilities
-    def buyCriticalChance(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.perks['critical_chance'] = True
-            print(f"{Colors.YELLOW}You now have a 20% chance for critical hits!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-
-    def buyCounter(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.perks['counter'] = True
-            print(f"{Colors.YELLOW}When attacked, you now have a 10% chance to counter attack!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-        
-    def buyAOE(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.perks['can_AOE'] = True
-            print(f"{Colors.YELLOW}Dealing damage will now do 40% damage to all enemies in a room!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-        
-    def buyDodgeChance(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.perks['dodge_chance'] = True
-            print(f"{Colors.YELLOW}You now have a 10% chance to dodge an attack!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-    
-    def buyHealthRegen(self, cost) -> bool:
-        if self.gold >= cost:
-            self.gold -= cost
-            self.perks['regen'] = True
-            print(f"{Colors.YELLOW}You now regenerate 5% HP per turn!{Colors.END}")
-            return True
-        else:
-            print(f"{Colors.RED}You do not have enough gold to purchase that item!{Colors.END}")
-            return False
-
-    
-    
