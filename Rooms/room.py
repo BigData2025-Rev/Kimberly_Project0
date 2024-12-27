@@ -1,8 +1,6 @@
 #Abstract room class
 from abc import ABC, abstractmethod
 
-import random as r
-
 class Room(ABC):
     def __init__(self, encounter_count : int):
         self.encounter_count = encounter_count

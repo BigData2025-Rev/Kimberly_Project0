@@ -12,12 +12,12 @@
         },
         {
             "name": "Attack Upgrade",
-            "cost": 40,
+            "cost": 45,
             "description": "Increases your attack by 3"
         },
         {
             "name": "Defense Upgrade",
-            "cost": 45,
+            "cost": 40,
             "description": "Increases your defense by 2"
         },
         {
@@ -42,7 +42,7 @@
         {
             "id": "dodge_chance",
             "name": "Dodge",
-            "cost": 80,
+            "cost": 90,
             "description": "20% chance to dodge an attack"
         },
         {
@@ -54,8 +54,20 @@
         {
             "id": "counter",
             "name": "Counter Strike",
-            "cost": 120,
+            "cost": 125,
             "description": "10% chance to negate an attack and deal 150% damage to the attacker"
+        },
+        {
+            "id": "life_steal",
+            "name": "Lifesteal",
+            "cost": 120,
+            "description": "7% of the damage you deal is returned as health"
+        },
+        {
+            "id": "second_wind",
+            "name": "Second Wind",
+            "cost": 90,
+            "description": "When you are below 25% health, deal 50% more damage"
         }
     ]
 }

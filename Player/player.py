@@ -4,7 +4,7 @@ import json
 import random
 from Util.colors import Colors
 
-DEF_SCALING = 20 # Scaling factor for defense calculation
+DEF_SCALING = 10 # Scaling factor for defense calculation
 
 #Factors for perks
 REGEN = 0.05
@@ -13,6 +13,10 @@ COUNTER_CHANCE = 0.1
 CRIT_CHANCE = 0.3 
 AOE_DMG = 0.4
 DODGE_CHANCE = 0.2
+LIFE_STEAL = 0.07
+SW_THRESHOLD = 0.25
+SW_DMG_BONUS = 0.5
+
 
 class Player:
     def __init__(self):
@@ -20,18 +24,18 @@ class Player:
         self.attack = 10.0
         self.defense = 0.0
         self.gold = 0
-        self.inventory = []
         self.max_hp = 100.0
         self.encounter_count = 1
         self.random_state = random.getstate()
 
-        # Item effects, To be implemented later
         self.perks = {
             'critical_chance': False,
             'counter': False,
             'can_AOE': False,
             'dodge_chance': False,
-            'regen': False
+            'regen': False,
+            'life_steal': False,
+            'second_wind': False
         }
 
     def hasPerk(self, perk):
@@ -45,7 +49,6 @@ class Player:
             'attack': self.attack,
             'defense': self.defense,
             'gold': self.gold,
-            'inventory': self.inventory,
             'max_hp': self.max_hp,
             'encounter_count': self.encounter_count,
             'random_state': {
@@ -58,12 +61,14 @@ class Player:
                 'counter': self.perks['counter'],
                 'can_AOE': self.perks['can_AOE'],
                 'dodge_chance': self.perks['dodge_chance'],
-                'regen': self.perks['regen']
+                'regen': self.perks['regen'],
+                'life_steal': self.perks['life_steal'],
+                'second_wind': self.perks['second_wind']
             }
         }
 
         with open('GameData/playerData.json', 'w') as file:
-            json.dump(data, file)
+            json.dump(data, file, indent=4)
 
     #reset player stats
     def reset(self):
@@ -131,6 +136,10 @@ class Player:
 
     # Calculate damage dealt based on player attack
     def attackEnemy(self, multiplier = 1) -> float:
+        if self.perks['second_wind']:
+            if self.hp <= self.max_hp * SW_THRESHOLD:
+                multiplier += SW_DMG_BONUS
+
         if self.perks['critical_chance']:
             critical_chance = CRIT_CHANCE
         else:
@@ -142,9 +151,16 @@ class Player:
         else:
             damage = self.attack * multiplier
 
+        if self.perks['life_steal']:
+            bonus = damage * LIFE_STEAL
+            self.hp += bonus
+            if self.hp > self.max_hp:
+                self.hp = self.max_hp
+            print(f"{Colors.GREEN}+{"{0:.2f}".format(bonus)} HP{Colors.END}")
+
         return damage
         
-        
+    #Prints the player's current stats
     def printStats(self):
         print(f"{Colors.MAGENTA}Current Stats:{Colors.END}")
         print(f"HP: {"{0:.2f}".format(self.hp)}/{int(self.max_hp)}, Attack: {"{0:.2f}".format(self.attack)}, Defense: {"{0:.2f}".format(self.defense)}, Gold: {self.gold}")
@@ -167,7 +183,6 @@ class Player:
             self.attack = data['attack']
             self.defense = data['defense']
             self.gold = data['gold']
-            self.inventory = data['inventory']
             self.max_hp = data['max_hp']
             self.encounter_count = data['encounter_count']
             state = data['random_state']

@@ -16,19 +16,19 @@ def load_enemy_data():
 
 
 class Enemy():
-    #Pulls a random enemy from the enemyList.json file
+
+    #Selects a random enemy or boss from the list based on the encounter count and initializes the enemy
     def __init__(self, encounter_count : int):
         if encounter_count % 10 == 0:
             enemy_data = boss_list[(encounter_count // 10) - 1]
         else:
             diff = (encounter_count // 10) * 2
-            enemy_data = enemy_list[r.randint(diff, diff+3)] #later change to be based on encounter_count
+            enemy_data = enemy_list[r.randint(diff, diff+3)]
         
         self.name = enemy_data['name']
         self.hp = enemy_data['hp']
         self.attack = enemy_data['attack']
 
-    #Override to string method
     def __str__(self):
         if(self.hp <= 0):
             return f"Enemy Defeated"

@@ -6,7 +6,7 @@ import random
 
 
 items = [] # Upgrades and items that can be bought
-perks = [] # One time pucahse items
+perks = [] # One time purchase items
 def loadItems(player : Player):
     global items
     global perks
@@ -23,15 +23,14 @@ class ShopRoom(Room):
         self.items_for_sale = []
         self.active = True
 
+    #Selects 3 random items from the items list and one random perk from the perks list
     def onEnter(self):
-        #pick 3 random items from items, shop can only sell one of each item
         self.items_for_sale = []
         for i in range(3):
             item = random.choice(items)
             while item in self.items_for_sale:
                 item = random.choice(items)
             self.items_for_sale.append(item)
-        #Select one item from perks to add to the shop
         if len(perks) > 0:
             self.items_for_sale.append(random.choice(perks))
         print('You have entered a shop room!')
@@ -41,7 +40,6 @@ class ShopRoom(Room):
 
     def getOptions(self):
         return [self.itemToString(item) for item in self.items_for_sale] + ['Leave']
-        #return self.items_for_sale + ['Leave']
 
     def handleInput(self, action, player : Player):
         global perks
@@ -77,7 +75,10 @@ class ShopRoom(Room):
                 success = buyAOE(player, item['cost'])
             elif item_id == 'Counter Strike':
                 success = buyCounter(player, item['cost'])
-
+            elif item_id == 'Lifesteal':
+                success = buyLifesteal(player, item['cost'])
+            elif item_id == 'Second Wind':
+                success = buySecondWind(player, item['cost'])
             if success:
                 perks.remove(item)
                 self.items_for_sale.remove(item)

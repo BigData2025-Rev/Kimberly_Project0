@@ -57,44 +57,11 @@
     {
         "name": "Wraith",
         "hp": 70,
-        "attack": 18
+        "attack": 22
     },
     {
         "name": "Cursed Knight",
         "hp": 110,
-        "attack": 22
-    },
-
-    {
-        "name": "Troll",
-        "hp": 120,
-        "attack": 20
-    },
-    {
-        "name": "Lich",
-        "hp": 120,
-        "attack": 40
-    },
-
-    {
-        "name": "Drake",
-        "hp": 180,
-        "attack": 40
-    },
-    {
-        "name": "Fire Elemental",
-        "hp": 100,
-        "attack": 35
-    },
-
-    {
-        "name": "Vampire",
-        "hp": 80,
-        "attack": 30
-    },
-    {
-        "name": "Phoenix",
-        "hp": 140,
-        "attack": 45
+        "attack": 18
     }
 ]

@@ -5,6 +5,14 @@ from Rooms.boss_room import BossRoom
 from Util.colors import Colors
 from Enemies.enemy import load_enemy_data
 import random as r
+import signal
+
+
+def handle_sigint(sig, frame):
+    print('\nQuitting game!')
+    exit(0)
+
+signal.signal(signal.SIGINT, handle_sigint)
 
 player = Player()
 BOSS_COUNT = 5
@@ -21,7 +29,7 @@ else:
         player.random_state = r.getstate()
         player.save()
 
-    except:
+    except ValueError:
         print('Invalid seed, using default seed of 0')
         seed = 0
         r.seed(seed)
@@ -40,9 +48,7 @@ def options_prompt(question: str, options: list[str]) -> int:
     while selected < 0 or selected >= len(options):
         print(question)
         for i in range(len(options)):
-            #color the number cyan
             print(Colors.CYAN + f'{i + 1}: ' + Colors.END + f'{options[i]}')
-            #print(f'{i + 1}: {options[i]}')
         try:
             selected = int(input("Enter your selection: "))-1
         except ValueError:
@@ -80,6 +86,7 @@ def begin_combat(player: Player, room: EnemyRoom):
             damage = player.attackEnemy()
             room.enemies[action].takeDamage(damage)
         print()
+        
         #Enemy turn
         if(room.isActive()):
             room.attackPlayer(player)
@@ -138,7 +145,7 @@ if not player.isAlive():
     print('Game over! You have died!')
     player.removeSave()
 elif player.encounter_count >= BOSS_COUNT * 10:
-    print('Congratulations! You have made it to the end of the game!')
+    print('Congratulations! You win!')
     player.removeSave()
 else:
     print("Quitting game!")

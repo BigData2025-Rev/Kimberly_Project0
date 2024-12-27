@@ -7,7 +7,7 @@ from Util.colors import Colors
 class EnemyRoom (Room):
     def __init__(self, encounter_count : int):
         super().__init__(encounter_count)
-        self.enemies = [] # list of enemies in the room, max 3
+        self.enemies = []
 
     #Called when player enters the room
     def onEnter(self):
@@ -21,7 +21,7 @@ class EnemyRoom (Room):
         player.rewardGold(8 * len(self.enemies) + 20)
         print(f"{Colors.YELLOW}You have defeated all the enemies!{Colors.END}")
 
-
+    #Returns a list of all alive enemies in the room
     def getAliveEnemies(self):
         return [enemy for enemy in self.enemies if enemy.hp > 0]
 

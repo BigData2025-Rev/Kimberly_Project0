@@ -103,3 +103,23 @@ def buyHealthRegen(player : Player, cost : int) -> bool:
     else:
         printFailMessage()
         return False
+    
+def buyLifesteal(player : Player, cost : int) -> bool:
+    if player.gold >= cost:
+        player.gold -= cost
+        player.perks['life_steal'] = True
+        printShopMessage(player.gold, cost, f"You now steal 7% of the damage you deal as HP!")
+        return True
+    else:
+        printFailMessage()
+        return False
+    
+def buySecondWind(player : Player, cost : int) -> bool:
+    if player.gold >= cost:
+        player.gold -= cost
+        player.perks['second_wind'] = True
+        printShopMessage(player.gold, cost, f"When you are below 25% HP, you deal bonus 50% damage!")
+        return True
+    else:
+        printFailMessage()
+        return False
